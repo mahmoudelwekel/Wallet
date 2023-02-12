@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Wallet.DataLayer.Contract\Wallet.RepositoryLayer.Contract.csproj" />
+    <ProjectReference Include="..\Wallet.Domain\Wallet.Domain.csproj" />
+    <ProjectReference Include="..\Wallet.ServiceLayer.Contract\Wallet.ServiceLayer.Contract.csproj" />
+  </ItemGroup>
+
+</Project>
