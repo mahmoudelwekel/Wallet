@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\App.DataLayer.Contract\App.RepositoryLayer.Contract.csproj" />
+    <ProjectReference Include="..\App.Domain\App.Domain.csproj" />
+    <ProjectReference Include="..\App.ServiceLayer.Contract\App.ServiceLayer.Contract.csproj" />
+  </ItemGroup>
+
+</Project>

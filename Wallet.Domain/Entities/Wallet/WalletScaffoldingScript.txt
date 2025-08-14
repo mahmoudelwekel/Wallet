@@ -1,1 +1,0 @@
-﻿scaffold-dbcontext "Server=(localdb)\.;Database=aspnet-Wallet-DA764CC4-4005-4F03-9991-BE8ED358A558;Trusted_Connection=True;MultipleActiveResultSets=true" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities/Wallet -f -Context WalletContext
