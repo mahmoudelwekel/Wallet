@@ -1,13 +1,12 @@
-﻿
-using App.Domain.Common.Models;
+﻿using App.Domain.Common.Models;
 using App.Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace App.RepositoryLayer.Contract.IGenericRepository
+namespace App.RepositoryLayer.Contract.IAppRepository
 {
-    public interface IGenericRepository<T> : IDisposable
+    public interface IAppGenericRepository<T> : IDisposable
     {
         //IEnumerable<T> GetAll();
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate = null, string Include = null, OrderBy OrderBy = 0, string OrderColumn = null, bool AsNoTracking = false);

@@ -1,4 +1,5 @@
 ﻿using App.Domain.Contexts;
+using App.Domain.Entities.App;
 using App.RepositoryLayer.Contract.IAppRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -9,11 +10,13 @@ namespace App.RepositoryLayer.Persistence.AppRepository
     public class AppWrapper : IAppUnitOfWork
     {
         private readonly IConfiguration _config;
-        private readonly IBaseContext _context;
+        private readonly AppDbContext _AppDbContext;
 
-        public AppWrapper(IBaseContext context)
+        public AppWrapper(IBaseContext context, IConfiguration config)
         {
-            this._context = context;
+            this._AppDbContext = context.App();
+            this._config = config;
+
         }
 
         //---------------------------------------------------------------------------------------------
@@ -26,7 +29,7 @@ namespace App.RepositoryLayer.Persistence.AppRepository
             {
                 if (_ExampleRepository == null)
                 {
-                    _ExampleRepository = new ExampleRepository(_config, _context);
+                    _ExampleRepository = new ExampleRepository(_config, _AppDbContext);
                 }
                 return _ExampleRepository;
             }
@@ -40,17 +43,17 @@ namespace App.RepositoryLayer.Persistence.AppRepository
 
         public void Dispose()
         {
-            _context.App().Dispose();
+            _AppDbContext.Dispose();
         }
 
         public int SaveChanges()
         {
-            return _context.App().SaveChanges();
+            return _AppDbContext.SaveChanges();
         }
 
         public void ForgetChanges()
         {
-            foreach (EntityEntry entry in _context.App().ChangeTracker.Entries())
+            foreach (EntityEntry entry in _AppDbContext.ChangeTracker.Entries())
             {
                 switch (entry.State)
                 {

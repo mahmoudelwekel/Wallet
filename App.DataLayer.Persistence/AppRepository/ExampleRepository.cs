@@ -3,17 +3,16 @@ using App.Domain.Entities.App;
 //using App.Helper.Enums;
 //using App.Helper.Extentions;
 using App.RepositoryLayer.Contract.IAppRepository;
-using App.RepositoryLayer.Persistence.GenericRepository;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace App.RepositoryLayer.Persistence.AppRepository
 {
-    public class ExampleRepository : GenericRepository<Example>, IExampleRepository
+    public class ExampleRepository : AppGenericRepository<Example>, IExampleRepository
     {
 
-        public ExampleRepository(IConfiguration config, IBaseContext context) : base(config, context)
+        public ExampleRepository(IConfiguration config, AppDbContext context) : base(config, context)
         {
 
         }

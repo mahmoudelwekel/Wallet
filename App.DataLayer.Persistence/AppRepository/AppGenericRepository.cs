@@ -1,7 +1,8 @@
 ﻿using App.Domain.Common.Models;
 using App.Domain.Contexts;
+using App.Domain.Entities.App;
 using App.Domain.Enum;
-using App.RepositoryLayer.Contract.IGenericRepository;
+using App.RepositoryLayer.Contract.IAppRepository;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,14 +12,14 @@ using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace App.RepositoryLayer.Persistence.GenericRepository
+namespace App.RepositoryLayer.Persistence.AppRepository
 {
-    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
+    public abstract class AppGenericRepository<T> : IAppGenericRepository<T> where T : class
     {
         protected readonly IConfiguration _config;
-        protected readonly IBaseContext _context;
+        protected readonly AppDbContext _context;
 
-        public GenericRepository(IConfiguration config, IBaseContext DBContext)
+        public AppGenericRepository(IConfiguration config, AppDbContext DBContext)
         {
             _config = config;
             _context = DBContext;
@@ -28,7 +29,7 @@ namespace App.RepositoryLayer.Persistence.GenericRepository
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> expression = null, string Include = "", OrderBy OrderBy = 0, string OrderColumn = null, bool AsNoTracking = false)
         {
-            var res = AsNoTracking ? _context.App().Set<T>().AsQueryable() : _context.App().Set<T>().AsNoTracking();
+            var res = AsNoTracking ? _context.Set<T>().AsQueryable() : _context.Set<T>().AsNoTracking();
 
             if (expression != null)
             {
@@ -60,18 +61,18 @@ namespace App.RepositoryLayer.Persistence.GenericRepository
         }
         public T FindSingle(int id)
         {
-            return _context.App().Find<T>(id);
+            return _context.Find<T>(id);
         }
 
 
         public void Insert(T entity)
         {
-            _context.App().Add<T>(entity);
+            _context.Add(entity);
         }
 
         public void Update(T entity)
         {
-            _context.App().Update<T>(entity);
+            _context.Update(entity);
         }
         public void Delete(T entity)
         {
@@ -79,40 +80,40 @@ namespace App.RepositoryLayer.Persistence.GenericRepository
             {
                 throw new ArgumentNullException("entity");
             }
-            _context.App().Set<T>().Remove(entity);
+            _context.Set<T>().Remove(entity);
         }
         public void Delete(Expression<Func<T, bool>> expression)
         {
-            var ents = _context.App().Set<T>().Where(expression).ToList();
+            var ents = _context.Set<T>().Where(expression).ToList();
             foreach (var ent in ents)
                 Delete(ent);
         }
 
         public void AddRange(IEnumerable<T> entities)
         {
-            _context.App().Set<T>().AddRange(entities);
+            _context.Set<T>().AddRange(entities);
         }
 
         public void UpdateRange(IEnumerable<T> entities)
         {
-            _context.App().Set<T>().UpdateRange(entities);
+            _context.Set<T>().UpdateRange(entities);
 
         }
 
         public void RemoveRange(IEnumerable<T> entities)
         {
-            _context.App().Set<T>().RemoveRange(entities);
+            _context.Set<T>().RemoveRange(entities);
         }
 
 
 
         public int Count(Expression<Func<T, bool>> expression)
         {
-            return _context.App().Set<T>().Count(expression);
+            return _context.Set<T>().Count(expression);
         }
         public bool Any(Expression<Func<T, bool>> expression)
         {
-            return _context.App().Set<T>().Any(expression);
+            return _context.Set<T>().Any(expression);
         }
 
 
@@ -122,8 +123,8 @@ namespace App.RepositoryLayer.Persistence.GenericRepository
             {
                 throw new ArgumentNullException("entity");
             }
-            _context.App().Set<T>().Add(entity);
-            _context.App().SaveChanges();
+            _context.Set<T>().Add(entity);
+            _context.SaveChanges();
             return entity.GetType().GetProperty(IdColumnName).GetValue(entity, null).ToString();
         }
 

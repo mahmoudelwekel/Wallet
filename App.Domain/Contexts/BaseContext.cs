@@ -8,7 +8,7 @@ namespace App.Domain.Contexts
 
     public interface IBaseContext
     {
-        Entities.App.MainContext App();
+        Entities.App.AppDbContext App();
 
     }
     public class BaseContext : IBaseContext
@@ -22,7 +22,7 @@ namespace App.Domain.Contexts
 
 
 
-        private Entities.App.MainContext _DefaultContext;
+        private Entities.App.AppDbContext _DefaultContext;
 
 
         public BaseContext(IOptions<ConnectionStringModel> connectionStringModel, IOptions<ConnectionTimeOutModel> connectionTimeOutModel)
@@ -31,12 +31,12 @@ namespace App.Domain.Contexts
             this._DefaultConnectionTimeOut = connectionTimeOutModel.Value.DefaultConnectionTimeOut;
         }
 
-        public Entities.App.MainContext App()
+        public Entities.App.AppDbContext App()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<Entities.App.MainContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<Entities.App.AppDbContext>();
             optionsBuilder.UseSqlServer(_DefaultConnection);
 
-            _DefaultContext = _DefaultContext ?? new Entities.App.MainContext(optionsBuilder.Options);
+            _DefaultContext = _DefaultContext ?? new Entities.App.AppDbContext(optionsBuilder.Options);
             _DefaultContext.Database.SetCommandTimeout(_DefaultConnectionTimeOut);
 
             _DefaultContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;

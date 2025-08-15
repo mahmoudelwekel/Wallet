@@ -4,13 +4,13 @@
 
 namespace App.Domain.Entities.App
 {
-    public partial class MainContext : DbContext
+    public partial class AppDbContext : DbContext
     {
-        public MainContext()
+        public AppDbContext()
         {
         }
 
-        public MainContext(DbContextOptions<MainContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
